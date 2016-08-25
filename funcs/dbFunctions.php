@@ -462,6 +462,59 @@ return $bipCurrentRating;
 }
 
 
+function getIOSlatestRelease($appName){
+
+$servername='46.101.113.44';
+$username='appony'; 
+$password='appony1020';
+$dbname='appony';
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
+
+$sql = "SELECT appid,appname FROM app_list where appname='".$appName."'";
+$result = $conn->query($sql);
+
+//echo 'sql: '.$sql;
+
+if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+
+
+//echo "INFO: started";
+$bipURL='http://itunes.apple.com/lookup?id='.$row["appid"].'&country=tr';
+$bipGet= file_get_contents($bipURL);
+$bipJson= json_decode($bipGet);
+//$bipImageURL=$bipJson->results[0]->artworkUrl512;
+$bipRating=$bipJson->results[0]->averageUserRating;
+$bipRaterNum=$bipJson->results[0]->userRatingCount;
+$bipCurrentRating=$bipJson->results[0]->averageUserRatingForCurrentVersion;
+$CurrentVersionReleaseDate=$bipJson->results[0]->currentVersionReleaseDate;
+$appID=$bipJson->results[0]->trackId;
+//echo "</br>INFO-appID: ".$appID;
+//echo "</br>INFO-appname: ".$row["appname"];
+//echo "</br>INFO-Rating: ".$bipRating;
+//echo "</br>INFO-RaterNumber: ".$bipRaterNum;
+//$return=createRatingRecord($appID,$bipRaterNum,$bipRating);
+//echo "</br>INFO: completed ".$return;
+//echo "</br>-------------------------</br>-------------------------</br>-------------------------</br>-------------------------</br>";
+
+    }
+} else {
+    //echo "0 results";
+}
+
+return $CurrentVersionReleaseDate;
+
+}
+
+
+
 function getIOSlatestRaterNum($appName){
 
 $servername='46.101.113.44';
@@ -570,8 +623,11 @@ return $version;
 
 function getBoxDetailsLastMin($appName){
 $iosRating=getIOSlatestRating($appName);
+if (is_null($iosRating)==TRUE){ $iosRating='n/a';}
 $iosRaterNum=getIOSlatestRaterNum($appName);
+if (is_null($iosRaterNum)==TRUE){ $iosRaterNum=0;}
 $version=getIOSlatestVersion($appName);
+$releaseDate=getIOSlatestRelease($appName);
 //$AndroidRating=getAndroidRating($appName);
 //$AndroidRaterNum=getAndroidRaterNum($appName);
 //$ImageURL=getImageUrl($appName);
@@ -580,7 +636,7 @@ $version=getIOSlatestVersion($appName);
 echo "												<p><p><center><a class=\"button2 big icon fa-apple\">".$iosRating."</a>";
 //																			<a class=\"button3 big icon fa-android\">".$AndroidRating."</a>
 echo "																			</p></center> </p>\n"; 
-echo "											<p>".$appName." son sürümü olan <b>".$version."</b> Apple Store'da <b>".$iosRaterNum." </b> kişi tarafından eğerlendirilmiştir.</p>\n"; 
+echo "											<p>".$appName." <b>".$version."</b>  sürümü <b>".$releaseDate."</b> tarihinde yayınlanmıştır. Son sürüm Apple Store'da <b>".$iosRaterNum." </b> kişi tarafından değerlendirilmiştir.</p>\n"; 
 
 }
 
@@ -1326,6 +1382,12 @@ $i=0;
 
 	}
 }
+
+
+
+
+
+
 
 
 ?>

@@ -15,8 +15,8 @@
 	</head>
 	<body class="homepage">
 <?php 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+//error_reporting(E_ALL);
+//ini_set('display_errors', 1);
 require("funcs/dbFunctions.php");
 
 $appName=$_GET['app'];
