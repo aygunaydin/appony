@@ -263,6 +263,7 @@ if ($result->num_rows > 0) {
 
 
 
+
 function getAndroidTRend($appName){
 $servername='46.101.113.44';
 $username='appony'; 
