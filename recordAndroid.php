@@ -13,7 +13,7 @@ $dbname='appony';
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
 //Android KAYIT
-$sql = "SELECT android_name,appname,androidToken FROM app_list where androidToken is not null";
+$sql = "SELECT android_name,appname,androidToken FROM app_list where androidToken is not null order by androidToken desc";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {

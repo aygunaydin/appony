@@ -1312,6 +1312,7 @@ echo "											<li><a href=\"details.php?app=akademi\">Akademi</a></li>\n";
 echo "											<li><a href=\"details.php?app=RBT\">ÇalarkenDinlet</a></li>\n"; 
 echo "											<li><a href=\"details.php?app=hesabim\">Hesabım</a></li>\n"; 
 echo "											<li><a href=\"details.php?app=platinum\">Platinum</a></li>\n"; 
+echo "											<li><a href=\"details.php?app=dergilik\">Dergilik</a></li>\n"; 
 echo "											<li><a href=\"details.php?app=gnc\">Gnctrkcll</a></li>\n"; 
 echo "										</ul>\n"; 
 echo "									</li>\n";
@@ -1322,6 +1323,7 @@ echo "											<li><a href=\"bench.php?app1=fizy&app2=spotify\" class=\"icon f
 echo "											<li><a href=\"bench.php?app1=depo&app2=dropbox\" class=\"icon fa-dropbox\"> Depo-Dropbox</a></li>\n"; 
 echo "											<li><a href=\"bench.php?app1=bip&app2=whatsapp\" class=\"icon fa-whatsapp\"> bip-Whatsapp</a></li>\n"; 
 echo "											<li><a href=\"bench.php?app1=hesabim&app2=yanimda\" class=\"icon fa-mobile\"> Hesabım-Yanımda</a></li>\n"; 
+echo "											<li><a href=\"bench.php?app1=dergilik&app2=dmags\" class=\"icon fa-book\"> Dergilik-Dmags</a></li>\n"; 
 echo "										</ul>\n"; 
 echo "									</li>\n";  
 echo "									\n"; 
