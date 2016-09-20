@@ -106,7 +106,7 @@ echo "							</div>\n";
 echo "							<div class=\"4u 12u(medium)\">\n"; 
 echo "\n"; 
 echo "								<!-- Box -->\n"; 
-									getBoxDetails('RBT');
+									getBoxDetails('dergilik');
 echo "\n"; 
 echo "							</div>\n"; 
 echo "						</div>\n"; 
