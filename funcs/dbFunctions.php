@@ -279,8 +279,14 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     // output data of each row
+    if ($appName=="upcall"){
+    $trendData="{ x: new Date(2016,9,11), y: 0 }";
+    $raterData="{ x: new Date(2016,9,11), y: 0 }";
+    }else {
     $trendData="{ x: new Date(2016,7,2), y: 0 }";
-    $raterData="{ x: new Date(2016,7,2), y: 0 }";
+    $raterData="{ x: new Date(2016,7,2), y: 0 }"; 	
+    }
+
 
 //{ x: new Date(2010,1,3), y: 510 },\n"; 
     while($row = $result->fetch_assoc()) {
@@ -351,8 +357,14 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     // output data of each row
+    if ($appName=="upcall"){
+    $trendData="{ x: new Date(2016,9,11), y: 0 }";
+    $raterData="{ x: new Date(2016,9,11), y: 0 }";
+    }else {
     $trendData="{ x: new Date(2016,7,2), y: 0 }";
-    $raterData="{ x: new Date(2016,7,2), y: 0 }";
+    $raterData="{ x: new Date(2016,7,2), y: 0 }"; 	
+    }
+
 
 //{ x: new Date(2010,1,3), y: 510 },\n"; 
     while($row = $result->fetch_assoc()) {
@@ -1309,6 +1321,7 @@ echo "											<li><a href=\"details.php?app=fizy\">Fizy</a></li>\n";
 echo "											<li><a href=\"details.php?app=bip\">Bip</a></li>\n"; 
 echo "											<li><a href=\"details.php?app=depo\">Akıllı Depo</a></li>\n"; 
 echo "											<li><a href=\"details.php?app=akademi\">Akademi</a></li>\n"; 
+echo "											<li><a href=\"details.php?app=upcall\">Upcall</a></li>\n";  
 echo "											<li><a href=\"details.php?app=RBT\">ÇalarkenDinlet</a></li>\n"; 
 echo "											<li><a href=\"details.php?app=hesabim\">Hesabım</a></li>\n"; 
 echo "											<li><a href=\"details.php?app=platinum\">Platinum</a></li>\n"; 
