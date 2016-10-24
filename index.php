@@ -100,7 +100,7 @@ echo "							</div>\n";
 echo "							<div class=\"4u 12u(medium)\">\n"; 
 echo "\n"; 
 echo "								<!-- Box -->\n";
-									getBoxDetails('depo');
+									getBoxDetails('lifebox');
 echo "\n"; 
 echo "							</div>\n"; 
 echo "							<div class=\"4u 12u(medium)\">\n"; 
