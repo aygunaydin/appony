@@ -1354,10 +1354,14 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 	if ($conn->connect_error) {
 	    die("Connection failed: " . $conn->connect_error);
 	} 
-	$sql = "select distinct appid, appname, arh.rating
-			from appony.app_list al, appony.app_rating_history arh
-			where al.appid=arh.app_id
-			order by al.isTurkcell desc, arh.rating desc ";
+	$sql = "select appname, arl.rating from appony.app_list app, 
+(select a.app_id, a.rating from appony.app_rating_history a, 
+(select app_id, rating, max(rate_date) dater from appony.app_rating_history group by app_id) b
+where a.app_id=b.app_id
+and a.rate_date = b.dater
+) arl
+where app.appid=arl.app_id 
+order by app.isTurkcell desc, arl.rating desc";
 
 
 $result = $conn->query($sql);
