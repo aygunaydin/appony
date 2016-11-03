@@ -99,6 +99,7 @@ select max(rate_date) from appony.android_app_rating_history where app_name='".$
 ";
 
 
+
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -113,6 +114,40 @@ if ($result->num_rows > 0) {
 }
 
 }
+
+
+
+function getAndroidBipRating($appname){
+
+$servername='46.101.113.44';
+$username='appony'; 
+$password='appony1020';
+$dbname='appony';
+$conn = new mysqli($servername, $username, $password, $dbname);
+	if ($conn->connect_error) {
+	    die("Connection failed: " . $conn->connect_error);
+	} 
+	$sql = "select app_name, format(rating,4) rating, rater_num from appony.android_app_rating_history a WHERE a.app_name='".$appname."' and rate_date in (
+select max(rate_date) from appony.android_app_rating_history where app_name='".$appname."');
+";
+
+
+
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+    	$raterCount=$row["rater_num"];
+    	$rating=$row["rating"];
+    }
+
+	$conn->close();
+	return $rating;
+}
+}
+
+
 
 function getAndroidRaterNum($appname){
 $servername='46.101.113.44';
@@ -199,6 +234,37 @@ $fizyImageURL=$fizyJson->results[0]->artworkUrl512;
 	return $fizyImageURL;
 }
 }
+
+
+function getImage100Url($appname){
+$servername='46.101.113.44';
+$username='appony'; 
+$password='appony1020';
+$dbname='appony';
+$conn = new mysqli($servername, $username, $password, $dbname);
+	if ($conn->connect_error) {
+	    die("Connection failed: " . $conn->connect_error);
+	} 
+	$sql = "select appid from appony.app_list a WHERE a.appname='".$appname."'";
+
+
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+    	$appIosID=$row["appid"];
+    }
+
+$fizyUrl='http://itunes.apple.com/lookup?id='.$appIosID.'&country=tr';
+$fizyGet = file_get_contents($fizyUrl);
+$fizyJson=json_decode($fizyGet);
+$fizyImageURL=$fizyJson->results[0]->artworkUrl100;
+
+	$conn->close();
+	return $fizyImageURL;
+}
+}
+
 
 
 function getImageUrl120($appname){
@@ -403,6 +469,25 @@ echo "											<p>".$appName." Apple Store'da <b>".$iosRaterNum." </b> , Googl
 echo "										</div>\n"; 
 echo "									</section>\n"; 
 }
+
+
+
+function getBipDetails($appName){
+$iosRating=getIOSRating($appName);
+$iosRaterNum=getIOSRaterNum($appName);
+$AndroidRating=getAndroidBipRating($appName);
+$AndroidRaterNum=getAndroidRaterNum($appName);
+$ImageURL=getImageUrl($appName);
+$content="";
+$content=$content.$appName; 
+$content=$content."\n\nApp Store puani: ".$iosRating;
+$content=$content."\nApp Store oy sayisi: ".$iosRaterNum;
+$content=$content."\n\nGoogle Play puani: ".$AndroidRating; 
+$content=$content."\nGoogle Play oy sayisi: ".$AndroidRaterNum;; 
+//$content=$content."http://turkcell.ga/details.php?app=".$appName."\n";
+return $content;
+}
+
 
 
 function getBoxDetailsMin($appName){
