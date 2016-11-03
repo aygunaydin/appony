@@ -162,6 +162,58 @@ if (isset($keywordRT) and $appControl==1) {
 
 
 	//getBipReviews($keywordLT);
+	} else	if ($keywordRT=="son") { 
+	$content="son 5 yorum gelecek";
+											$servername='46.101.113.44';
+											$username='appony'; 
+											$password='appony1020';
+											$dbname='appony';
+											$conn = new mysqli($servername, $username, $password, $dbname);
+												if ($conn->connect_error) {
+												    die("Connection failed: " . $conn->connect_error);
+												} 
+												$sql = "select appid from appony.app_list a WHERE a.appname='".$keywordLT."'";
+
+
+											$result = $conn->query($sql);
+											if ($result->num_rows > 0) {
+											    // output data of each row
+											    while($row = $result->fetch_assoc()) {
+											    	$appIosID=$row["appid"];
+											    	echo "\napp ios id from db:".$appIosID;
+											    }
+
+											$bipURL='http://itunes.apple.com/lookup?id='.$appIosID.'&country=tr';
+											$bipGet= file_get_contents($bipURL);
+											$bipJson= json_decode($bipGet);
+											$releaseDate=$bipJson->results[0]->currentVersionReleaseDate;
+											$bipRating=$bipJson->results[0]->averageUserRatingForCurrentVersion;
+											$bipRaterNum=$bipJson->results[0]->userRatingCountForCurrentVersion;
+											$currentVersion=$bipJson->results[0]->version;
+											$releaseDate=substr($releaseDate, 0, 10);
+											echo "\nApp comment get url: ".$bipURL;	
+											echo "\nApp comment release date: ".$releaseDate;
+											echo "\nApp comment rating: ".$bipRating;
+											echo "\nApp comment releasedata: ".$bipRaterNum;
+
+											$bul = array('ç', 'ı', 'ğ', 'ş', 'ö', 'ü');
+       										$degistir = array('c', 'i', 'g', 's', 'o', 'u');
+											
+											$content=$keywordLT." App Store guncel versiyon: ".$currentVersion;
+											$content=$content."
+											lansman tarihi: ".$releaseDate;
+											$content=$content."
+											puani: ".$bipRating;
+											$content=$content."
+											puanlayan kullanici sayisi: ".$bipRaterNum;
+											echo "
+											content for current version: ".$content;
+											$postResult=sendBipResponse($receiver,$content);												
+													}
+												
+
+
+	//getBipReviews($keywordLT);
 	} else {$content="Hatali istek girdin. Sorgulayabilecegin sihirli kelimeleri ogrenmek icin yardim yazip gonderebilirsin."; 
 			$postResult=sendBipResponse($receiver,$content); }
 
@@ -169,7 +221,7 @@ if (isset($keywordRT) and $appControl==1) {
 else {
 		if ($keyword=="yardim") {
 
-		$content="\nStore puanlarini ogrenmek icin  servisin ismini yaz gonder.\nOrnek: fizy \n\nApp store son 5 yoruma ulasmak icin servis ismi bosluk yorum yaz gonder.\nOrnek: fizy yorum\n\nSorgulayabilecegin servisler:
+		$content="\nStore puanlarini ogrenmek icin  servisin ismini yaz gonder.\nOrnek: fizy \n\nApp store'da yayinlanan son versiyona ait bilgilere ulasmak icin servis ismi bosluk son yaz gonder. Ornek: lifebox son \n\nApp store son 5 yoruma ulasmak icin servis ismi bosluk yorum yaz gonder.\nOrnek: bip yorum\n\nSorgulayabilecegin servisler:
 		\nfizy\nlifebox\nbip\nhesabim\ndergilik\nRBT\nupcall\nplatinum\ntty\ngnc\nakademi\nyanimda\nspotify\nwhatsapp\ndmags
 		";
 		$postResult=sendBipResponse($receiver,$content);
