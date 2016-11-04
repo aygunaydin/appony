@@ -62,6 +62,69 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 
 
+function getBipAllDetails($con){
+
+//if ($conn=="ios") {$order="rating";} else {$wrapper="apps-wrapper";}
+$sqlIOS="select appname, arl.rating from appony.app_list app, 
+(select a.app_id, a.rating from appony.app_rating_history a, 
+(select app_id, rating, max(rate_date) dater from appony.app_rating_history group by app_id) b
+where a.app_id=b.app_id
+and a.rate_date = b.dater
+) arl
+where app.appid=arl.app_id 
+order by app.isTurkcell desc, arl.rating desc";
+
+$sqlAndroid="select appname, arl.rating from appony.app_list app, 
+(select a.app_name, a.rating from appony.android_app_rating_history a, 
+(select app_name, rating, max(rate_date) dater from appony.android_app_rating_history group by app_name) b
+where a.app_name=b.app_name
+and a.rate_date = b.dater
+) arl
+where app.appname =arl.app_name
+order by app.isTurkcell desc, arl.rating desc
+";
+
+
+if ($con=="ios") {$sqlOrder=$sqlIOS;} else {$sqlOrder=$sqlAndroid;}
+
+$servername='46.101.113.44';
+$username='appony'; 
+$password='appony1020';
+$dbname='appony';
+$conn = new mysqli($servername, $username, $password, $dbname);
+	if ($conn->connect_error) {
+	    die("Connection failed: " . $conn->connect_error);
+	} 
+	$sql = $sqlOrder;
+$result = $conn->query($sql);
+$i=0;
+$content="AppStore - GooglePlay - Servis";
+
+	if ($result->num_rows > 0) {
+	    // output data of each row
+	    while($row = $result->fetch_assoc()) {
+	    	$appName=$row["appname"];
+	    	$i++;
+
+				$iosRating=getIOSBipRating($appName);
+				$iosRaterNum=getIOSRaterNum($appName);
+				$AndroidRating=getAndroidRating($appName);
+				$AndroidRaterNum=getAndroidRaterNum($appName);
+				$ImageURL=getImageUrl($appName);
+				$contentInc=$iosRating." - ".$AndroidRating." - ".$appName;
+				$content=$content."\n".$contentInc;
+				//$content=$content."http://turkcell.ga/details.php?app=".$appName."\n";
+				echo "\nGet All App service list: ".$i." - ".$contentInc;
+
+			    }
+
+			    $conn->close();
+
+	}
+				return $content;
+
+
+}
 
 function createApp($appID,$appName,$androidName)
 {
@@ -326,6 +389,35 @@ if ($result->num_rows > 0) {
 	return $rating;
 }
 }
+
+function getIOSBipRating($appname){
+$servername='46.101.113.44';
+$username='appony'; 
+$password='appony1020';
+$dbname='appony';
+
+$iosID=getIosID($appname);
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+	if ($conn->connect_error) {
+	    die("Connection failed: " . $conn->connect_error);
+	} 
+	$sql = "select app_id, format(rating,2) rating , rater_num from appony.app_rating_history a WHERE a.app_id='".$iosID."' and rate_date in (
+select max(rate_date) from appony.app_rating_history where app_id='".$iosID."')";
+
+
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+    	$raterCount=$row["rater_num"];
+    	$rating=$row["rating"];
+    }
+	$conn->close();
+	return $rating;
+}
+}
+
 
 
 

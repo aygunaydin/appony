@@ -90,7 +90,9 @@ echo "\nkeyword word count: ".$wordCount;
 echo "\nkeywordLT: ".$keywordLT;
 echo "\nkeywordRT: ".$keywordRT;
 echo "\napp control result: ";
-print_r($appControl);
+$appCresult=" CR ";
+if ($appControl=false) {$appCresult="istek servis ismi icermiyor";}
+print_r($appControl)." ".$appCresult;
 echo "\napplist: ";
 print_r($applist);
 $receiver=$sender;
@@ -215,38 +217,54 @@ if (isset($keywordRT) and $appControl==1) {
 
 	//getBipReviews($keywordLT);
 	} else {$content="Hatali istek girdin. Sorgulayabilecegin sihirli kelimeleri ogrenmek icin yardim yazip gonderebilirsin."; 
-			$postResult=sendBipResponse($receiver,$content); }
+			$postResult=sendBipResponse($receiver,$content);
+			echo "\nYorum hata content is: ".$content;
+ }
 
 }
 else {
 		if ($keyword=="yardim") {
 
-		$content="\nStore puanlarini ogrenmek icin  servisin ismini yaz gonder.\nOrnek: fizy \n\nApp store'da yayinlanan son versiyona ait bilgilere ulasmak icin servis ismi bosluk son yaz gonder. Ornek: lifebox son \n\nApp store son 5 yoruma ulasmak icin servis ismi bosluk yorum yaz gonder.\nOrnek: bip yorum\n\nSorgulayabilecegin servisler:
-		\nfizy\nlifebox\nbip\nhesabim\ndergilik\nRBT\nupcall\nplatinum\ntty\ngnc\nakademi\nyanimda\nspotify\nwhatsapp\ndmags
-		";
+		$content="\nStore puanlarini ogrenmek icin  servisin ismini yaz gonder.\nOrnek: fizy \n\nApp store'da yayinlanan son versiyona ait bilgilere ulasmak icin servis ismi bosluk son yaz gonder\nOrnek: lifebox son \n\nApp store son 5 yoruma ulasmak icin servis ismi bosluk yorum yaz gonder.\nOrnek: bip yorum\n\nTüm servislerin puanini gorebilmek için hepsi yaz gonder. Sıralı almak için hepsi ios yada hepsi android yaz gonder.\nÖrnek: hepsi ios \n\nSorgulayabilecegin servisleri ogrenmek icin liste yaz gonder.\nOrnek: liste";
 		$postResult=sendBipResponse($receiver,$content);
+		echo "\nyardim content is: ".$content;
+
 
 		} elseif ($keyword=="yorum") {
-
-		$content="Servis ismi bosluk yorum yazarak istedigin servise ait son 5 app store yorumuna ulasabilirsin. \nOrnek: fizy yorum \n\nSorgulayabilecegin servisler:\nfizy\nlifebox\nbip\nhesabim\ndergilik\nRBT\nupcall\nplatinum\ntty\ngnc\nakademi\nyanimda\nspotify\nwhatsapp\ndmags";
+		$content="Servis ismi bosluk yorum yazarak istedigin servise ait son 5 app store yorumuna ulasabilirsin. Ornek: fizy yorum \n\nSorgulayabilecegin servisler:\nfizy\nlifebox\nbip\nhesabim\ndergilik\nRBT\nupcall\nplatinum\ntty\ngnc\nakademi\nyanimda\nspotify\nwhatsapp\ndmags";
 		$postResult=sendBipResponse($receiver,$content);
+		echo "\nyorum content is: ".$content;
 
-		}
 
-		elseif ($appControl==1){
+		} elseif ($keyword=="liste") {
+		$content="Sorgulayabilecegin servisler:\nfizy\nlifebox\nbip\nhesabim\ndergilik\nRBT\nupcall\nplatinum\ntty\ngnc\nakademi\nyanimda\nspotify\nwhatsapp\ndmags";
+		$postResult=sendBipResponse($receiver,$content);
+		echo "\nliste content is: ".$content;
 
+
+		}elseif ($appControl==1){
 		$content=getBipDetails($keyword);
 		$postResult=sendBipResponse($receiver,$content);
+		echo "\nServiceName case content is: ".$content;
+		//$URLmessage="http://turkcell.ga/details.php?app=".$keyword;
+
+		} elseif ($keywordLT=="hepsi"){
+		if ($keywordRT=="android") {$con="android";} else{$con="ios";}
+		$content=getBipAllDetails($con);
+		$postResult=sendBipResponse($receiver,$content);
+		echo "\nhepsi content is: ".$content;
 		//$URLmessage="http://turkcell.ga/details.php?app=".$keyword;
 
 		} elseif ($keywordLT=='Appony,' or $keyword==''){
-			$content="Hosgeldin ".$sender.". Senin icin neler yapabilecegimi gormek istersen yardim yazip gondermen yeterli.";
-			$postResult=sendBipResponse($receiver,$content);
+		$content="Hosgeldin ".$sender.". Senin icin neler yapabilecegimi gormek istersen yardim yazip gondermen yeterli.";
+		$postResult=sendBipResponse($receiver,$content);
+		echo "\nnull content is: ".$content;
 
+		}else { 
+		$content="Hatali istek girdin. Sorgulayabilecegin sihirli kelimeleri ogrenmek icin yardim yazip gonderebilirsin."; 
+		$postResult=sendBipResponse($receiver,$content);
+		echo "\nhata content is: ".$content;
 
-
-		}else { $content="Hatali istek girdin. Sorgulayabilecegin sihirli kelimeleri ogrenmek icin yardim yazip gonderebilirsin."; 
-				$postResult=sendBipResponse($receiver,$content);
 }
 
 }
@@ -257,7 +275,7 @@ else {
 
 date_default_timezone_set('Europe/Istanbul');
 
-echo "\n\nINFO - ".date('d/m/Y h:i:s', time())." - receiver is ".$receiver." and  message is: ".$content."\n\n"; 
+echo "\n\nINFO - ".date('d/m/Y h:i:s', time())." - receiver is ".$receiver." and  message is:\n ".$content."\n\n"; 
 
 
  
@@ -276,7 +294,7 @@ function sendBipResponse($receiver,$content){
 
 //$postdataRaw ='{"txnid":"200","receiver":{"type":2, "address":"'.$receiver.'"}, "composition": {"list": [{"type":0,"message":"'.$content.'"}]}}';
 
-$postdata['txnid']=rand(200,10000);
+$postdata['txnid']=$msgId;
 $receiverArray['type']=2;
 $receiverArray['address']=$receiver;
 $postdata['receiver']=$receiverArray;
@@ -288,7 +306,7 @@ $postdata['composition']=$composition0;
 //echo "\npostdata array: ".$postdata;
 //$postdataJson = "json=".json_encode($postdata)."&";
 $postdataJson = json_encode($postdata);
-echo "\npostdata json: ".$postdataJson;
+echo "\n\npostdata json: ".$postdataJson."\n\n\n";
 
 // $contentArray=array(
 //    'txnid' => '200',
