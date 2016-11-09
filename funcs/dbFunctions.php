@@ -1504,6 +1504,7 @@ echo "											<li><a href=\"details.php?app=hesabim\">Hesabım</a></li>\n";
 echo "											<li><a href=\"details.php?app=platinum\">Platinum</a></li>\n"; 
 echo "											<li><a href=\"details.php?app=dergilik\">Dergilik</a></li>\n"; 
 echo "											<li><a href=\"details.php?app=gnc\">Gnctrkcll</a></li>\n"; 
+echo "											<li><a href=\"details.php?app=resmiislerim\">Resmi İşlerim</a></li>\n"; 
 echo "											<li><a href=\"details.php?app=tty\">TTY</a></li>\n"; 
 echo "										</ul>\n"; 
 echo "									</li>\n";
