@@ -54,6 +54,12 @@ echo "\nsender is: ".$sender;
 echo "\nsendtime id is: ".$sendtime;
 
 
+$file="appony.log";
+$log=date("Y-m-d h:i:sa")." - REQUEST - sender: ".$sender." keyword: ".$keyword." - msgid:".$msgId.PHP_EOL; 
+
+file_put_contents($file, $log, FILE_APPEND | LOCK_EX);
+
+
 
 //If json_decode failed, the JSON is invalid.
 if(!is_array($decoded)){
@@ -71,6 +77,7 @@ $applist[]='hesabim';
 $applist[]='bip';
 $applist[]='akademi';
 $applist[]='spotify';
+$applist[]='resmiislerim';
 $applist[]='tty';
 $applist[]='whatsapp';
 $applist[]='dropbox';
@@ -89,10 +96,13 @@ $wordCount=str_word_count($keyword);
 echo "\nkeyword word count: ".$wordCount;
 echo "\nkeywordLT: ".$keywordLT;
 echo "\nkeywordRT: ".$keywordRT;
-echo "\napp control result: ";
-$appCresult=" CR ";
-if ($appControl=false) {$appCresult="istek servis ismi icermiyor";}
+echo "\napp control result 0/1: ".$appControl;
+$appCresult=" CR: ";
+//if ($appControl=0) {$appCresult="istek servis ismi icermiyor";}
+echo "\nAppcontrol array printR: ";
 print_r($appControl)." ".$appCresult;
+
+print_r($applist);
 echo "\napplist: ";
 print_r($applist);
 $receiver=$sender;
@@ -231,13 +241,13 @@ else {
 
 
 		} elseif ($keyword=="yorum") {
-		$content="Servis ismi bosluk yorum yazarak istedigin servise ait son 5 app store yorumuna ulasabilirsin. Ornek: fizy yorum \n\nSorgulayabilecegin servisler:\nfizy\nlifebox\nbip\nhesabim\ndergilik\nRBT\nupcall\nplatinum\ntty\ngnc\nakademi\nyanimda\nspotify\nwhatsapp\ndmags";
+		$content="Servis ismi bosluk yorum yazarak istedigin servise ait son 5 app store yorumuna ulasabilirsin. Ornek: fizy yorum \n\nSorgulayabilecegin servisler:\nfizy\nlifebox\nbip\nhesabim\ndergilik\nRBT\nupcall\nplatinum\ntty\ngnc\nakademi\nyanimda\nspotify\nwhatsapp\ndmags\nresmiislerim";
 		$postResult=sendBipResponse($receiver,$content);
 		echo "\nyorum content is: ".$content;
 
 
 		} elseif ($keyword=="liste") {
-		$content="Sorgulayabilecegin servisler:\nfizy\nlifebox\nbip\nhesabim\ndergilik\nRBT\nupcall\nplatinum\ntty\ngnc\nakademi\nyanimda\nspotify\nwhatsapp\ndmags";
+		$content="Sorgulayabilecegin servisler:\nfizy\nlifebox\nbip\nhesabim\ndergilik\nRBT\nupcall\nplatinum\ntty\ngnc\nakademi\nyanimda\nspotify\nwhatsapp\ndmags\nresmiislerim";
 		$postResult=sendBipResponse($receiver,$content);
 		echo "\nliste content is: ".$content;
 
@@ -278,6 +288,7 @@ date_default_timezone_set('Europe/Istanbul');
 echo "\n\nINFO - ".date('d/m/Y h:i:s', time())." - receiver is ".$receiver." and  message is:\n ".$content."\n\n"; 
 
 
+
  
 
 // if ($appControl==1){
@@ -287,6 +298,9 @@ echo "\n\nINFO - ".date('d/m/Y h:i:s', time())." - receiver is ".$receiver." and
 //}
 
 echo "\n\nINFO - POSTRESULT : ".date('d/m/Y h:i:s', time())." - \n".$postResult; 
+echo "\n\nINFO - POSTRESULT : ".date('d/m/Y h:i:s', time())." - \n".$postResult; 
+
+
 
 
 
@@ -294,7 +308,8 @@ function sendBipResponse($receiver,$content){
 
 //$postdataRaw ='{"txnid":"200","receiver":{"type":2, "address":"'.$receiver.'"}, "composition": {"list": [{"type":0,"message":"'.$content.'"}]}}';
 
-$postdata['txnid']=$msgId;
+$tnxid=rand(1000,9999);
+$postdata['txnid']=$tnxid;
 $receiverArray['type']=2;
 $receiverArray['address']=$receiver;
 $postdata['receiver']=$receiverArray;
@@ -307,6 +322,12 @@ $postdata['composition']=$composition0;
 //$postdataJson = "json=".json_encode($postdata)."&";
 $postdataJson = json_encode($postdata);
 echo "\n\npostdata json: ".$postdataJson."\n\n\n";
+$file="appony.log";
+$log=date("Y-m-d h:i:sa")." - RESPONSE - receiver: ".$sender." jsonString: ".$postdataJson." - tnxid:".$tnxid.PHP_EOL; 
+
+file_put_contents($file, $log, FILE_APPEND | LOCK_EX);
+
+
 
 // $contentArray=array(
 //    'txnid' => '200',
