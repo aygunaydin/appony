@@ -4,6 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require("funcs/dbFunctions.php");
 
+date_default_timezone_set('Europe/Istanbul');
 
 if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') != 0){
     throw new Exception('Request method must be POST!');
@@ -65,7 +66,6 @@ file_put_contents($file, $log, FILE_APPEND | LOCK_EX);
 if(!is_array($decoded)){
     throw new Exception('Received content contained invalid JSON!');
 }
- 
 //$applist[]='yardim';
 $applist[]='rbt';
 $applist[]='lifebox';
@@ -283,7 +283,7 @@ else {
 //$receiver=$sender;
 
 
-date_default_timezone_set('Europe/Istanbul');
+//date_default_timezone_set('Europe/Istanbul');
 
 echo "\n\nINFO - ".date('d/m/Y h:i:s', time())." - receiver is ".$receiver." and  message is:\n ".$content."\n\n"; 
 
@@ -323,7 +323,7 @@ $postdata['composition']=$composition0;
 $postdataJson = json_encode($postdata);
 echo "\n\npostdata json: ".$postdataJson."\n\n\n";
 $file="appony.log";
-$log=date("Y-m-d h:i:sa")." - RESPONSE - receiver: ".$sender." jsonString: ".$postdataJson." - tnxid:".$tnxid.PHP_EOL; 
+$log=date("Y-m-d h:i:sa")." - RESPONSE - receiver: ".$receiver." jsonString: ".$postdataJson." - tnxid:".$tnxid.PHP_EOL; 
 
 file_put_contents($file, $log, FILE_APPEND | LOCK_EX);
 

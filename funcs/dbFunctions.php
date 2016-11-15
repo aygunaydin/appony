@@ -1492,7 +1492,7 @@ function getTopMenu(){
 echo "								<ul>\n"; 
 echo "									<li class=\"current\"><a href=\"index.php\" class=\"icon fa-home\">  Anasayfa</a></li>\n"; 
 echo "									<li class=\"current\">\n"; 
-echo "										<a href=\"#\" class=\"icon fa-mobile\">  Turkcell Apps</a>\n"; 
+echo "										<a href=\"#\" class=\"icon fa-mobile\"> Apps</a>\n"; 
 echo "										<ul>\n"; 
 echo "											<li><a href=\"details.php?app=fizy\">Fizy</a></li>\n"; 
 echo "											<li><a href=\"details.php?app=bip\">Bip</a></li>\n"; 
