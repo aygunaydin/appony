@@ -850,7 +850,7 @@ function getIosAllTrend(){
 
 $fizyTrend=getIosTRend('fizy');
 $bipTrend=getIosTRend('bip');
-$depoTrend=getIosTRend('depo');
+$depoTrend=getIosTRend('lifebox');
 echo "  <script type=\"text/javascript\">\n"; 
 echo "  window.onload = function () {\n"; 
 echo "      var chartIOS = new CanvasJS.Chart(\"chartContainerIOS\",\n"; 
@@ -911,7 +911,7 @@ echo "          },\n";
 echo "          {           \n"; 
 echo "              type: \"line\",\n"; 
 echo "              showInLegend: true,\n"; 
-echo "              name: \"Depo\",\n"; 
+echo "              name: \"lifebox\",\n"; 
 echo "              color: \"#00B2FF\",\n"; 
 echo "              lineThickness: 2,\n"; 
 echo "\n"; 

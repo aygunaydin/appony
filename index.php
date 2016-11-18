@@ -197,7 +197,7 @@ echo "											<li><a href=\"#\" class=\"icon fa-dribbble\"><span class=\"labe
 echo "											<li><a href=\"#\" class=\"icon fa-pinterest\"><span class=\"label\">Pinterest</span></a></li>\n"; 
 echo "										</ul>\n"; 
 echo "										<p>VAS-MIS<br />\n"; 
-echo "										Soğanlık Kartal<br />\n"; 
+echo "										<br />\n"; 
 echo "										</p>\n"; 
 echo "									</section>\n"; 
 echo "\n"; 
