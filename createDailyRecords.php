@@ -31,14 +31,20 @@ $bipJson= json_decode($bipGet);
 //$bipImageURL=$bipJson->results[0]->artworkUrl512;
 $bipRating=$bipJson->results[0]->averageUserRating;
 $bipRaterNum=$bipJson->results[0]->userRatingCount;
-//$bipCurrentRating=$bipJson->results[0]->averageUserRatingForCurrentVersion;
-//$bipCurrentRaterNum=$bipJson->results[0]->userRatingCountForCurrentVersion;
+$bipCurrentRating=$bipJson->results[0]->averageUserRatingForCurrentVersion;
+$bipCurrentRaterNum=$bipJson->results[0]->userRatingCountForCurrentVersion;
 $appID=$bipJson->results[0]->trackId;
+$version=$bipJson->results[0]->version;
+$CurrentVersionReleaseDate=$bipJson->results[0]->currentVersionReleaseDate;
 echo "</br>INFO-appID: ".$appID;
 echo "</br>INFO-appname: ".$row["appname"];
 echo "</br>INFO-Rating: ".$bipRating;
 echo "</br>INFO-RaterNumber: ".$bipRaterNum;
-$return=createRatingRecord($appID,$bipRaterNum,$bipRating);
+echo "</br>INFO-Current_Rating: ".$bipCurrentRating;
+echo "</br>INFO-Current_RaterNumber: ".$bipCurrentRaterNum;
+echo "</br>INFO-Version: ".$version;
+
+$return=createRatingRecord($appID,$bipRaterNum,$bipRating,$bipCurrentRating,$bipCurrentRaterNum,$version,$CurrentVersionReleaseDate);
 echo "</br>INFO: completed ".$return;
 echo "</br>-------------------------</br>-------------------------</br>-------------------------</br>-------------------------</br>";
 

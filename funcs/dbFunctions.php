@@ -7,11 +7,16 @@ $username='appony';
 $password='appony1020';
 $dbname='appony';
 
-function createRatingRecord($appID,$raterCount,$rating)
+function createRatingRecord($appID,$raterCount,$rating,$bipCurrentRating,$bipCurrentRaterNum,$version,$CurrentVersionReleaseDate)
 {
 echo "</br>INFO-DB IOS Values-appid: ".$appID;
 echo "</br>INFO-DB IOS Values-rater num: ".$raterCount;
 echo "</br>INFO-DB IOS Values-rating: ".$rating;;
+echo "</br>INFO-DB IOS Values-current-rater num: ".$bipCurrentRaterNum;
+echo "</br>INFO-DB IOS Values-current-rating: ".$bipCurrentRating;;
+echo "</br>INFO-DB IOS Values-Version: ".$version;;
+echo "</br>INFO-DB IOS Values-Version release date: ".$CurrentVersionReleaseDate;
+
 $servername='46.101.113.44';
 $username='appony'; 
 $password='appony1020';
@@ -20,7 +25,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 	if ($conn->connect_error) {
 	    die("Connection failed: " . $conn->connect_error);
 	} 
-	$sql = "INSERT INTO appony.`app_rating_history` (`app_id`, `rater_num`, `rating`) VALUES ('".$appID."', '".$raterCount."', '".$rating."');";
+	$sql = "INSERT INTO appony.`app_rating_history` (`app_id`, `rater_num`, `rating`, `current_version_rater_num`, `current_version`,`current_version_id`,`current_version_release_date`) VALUES ('".$appID."', '".$raterCount."', '".$rating."','".$bipCurrentRaterNum."', '".$bipCurrentRating."', '".$version."', '".$CurrentVersionReleaseDate."');";
 
 	if ($conn->query($sql) === TRUE) {
     	echo "</br>INFO: New record created successfully";
