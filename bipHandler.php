@@ -60,6 +60,9 @@ $log=date("Y-m-d h:i:sa")." - REQUEST - sender: ".$sender." keyword: ".$keyword.
 
 file_put_contents($file, $log, FILE_APPEND | LOCK_EX);
 
+$bul = array('ç', 'ğ', 'ş', 'ö', 'ü','ı');
+$degistir = array('c', 'g', 's', 'o', 'u','i');
+$keyword = str_replace($bul, $degistir, $keyword);
 
 
 //If json_decode failed, the JSON is invalid.
