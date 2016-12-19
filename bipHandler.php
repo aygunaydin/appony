@@ -89,6 +89,7 @@ $applist[]='upcall';
 $applist[]='platinum';
 $applist[]='akademi';
 $applist[]='yanimda';
+$applist[]='turkcelltv';
 
 $keyword=strtolower($keyword);
 $keywords=explode(" ",$keyword);
@@ -159,18 +160,12 @@ if (isset($keywordRT) and $appControl==1) {
 											$versionPlaceholder='im:version';
 											$version=$fizyJson->feed->entry[$x]->$versionPlaceholder->label;
 											$content=$keywordLT." yorum ".$y;
-											$content=$content."
-											kullanıcı adi: ".$author;
-											$content=$content."
-											puani: ".$rating;
-											$content=$content."
-											surum: ".$version;
-											$content=$content."
-											baslik: ".$title;
-											$content=$content."
-											Yorum: ".$comment;	
-											echo "
-											content with reviews: ".$content;
+											$content=$content."\nkullanıcı adi: ".$author;
+											$content=$content."\npuani: ".$rating;
+											$content=$content."\nsurum: ".$version;
+											$content=$content."\nbaslik: ".$title;
+											$content=$content."\nYorum: ".$comment;	
+											echo "\ncontent with reviews: ".$content;
 											$postResult=sendBipResponse($receiver,$content);												
 													}
 												}
@@ -215,14 +210,10 @@ if (isset($keywordRT) and $appControl==1) {
        										$degistir = array('c', 'i', 'g', 's', 'o', 'u');
 											
 											$content=$keywordLT." App Store guncel versiyon: ".$currentVersion;
-											$content=$content."
-											lansman tarihi: ".$releaseDate;
-											$content=$content."
-											puani: ".$bipRating;
-											$content=$content."
-											puanlayan kullanici sayisi: ".$bipRaterNum;
-											echo "
-											content for current version: ".$content;
+											$content=$content."\nlansman tarihi: ".$releaseDate;
+											$content=$content."\npuani: ".$bipRating;
+											$content=$content."\npuanlayan kullanici sayisi: ".$bipRaterNum;
+											echo "content for current version: ".$content;
 											$postResult=sendBipResponse($receiver,$content);												
 													}
 												
@@ -238,7 +229,7 @@ if (isset($keywordRT) and $appControl==1) {
 else {
 		if ($keyword=="yardim") {
 
-		$content="\nStore puanlarini ogrenmek icin  servisin ismini yaz gonder.\nOrnek: fizy \n\nApp store'da yayinlanan son versiyona ait bilgilere ulasmak icin servis ismi bosluk son yaz gonder\nOrnek: lifebox son \n\nApp store son 5 yoruma ulasmak icin servis ismi bosluk yorum yaz gonder.\nOrnek: bip yorum\n\nTüm servislerin puanini gorebilmek için hepsi yaz gonder. Sıralı almak için hepsi ios yada hepsi android yaz gonder.\nÖrnek: hepsi ios \n\nSorgulayabilecegin servisleri ogrenmek icin liste yaz gonder.\nOrnek: liste";
+		$content="\nStore puanlarini ogrenmek icin  servisin ismini yaz gonder.\nOrnek: fizy \n\nApp store'da yayinlanan son versiyona ait bilgilere ulasmak icin servis ismi bosluk son yaz gonder\nOrnek: lifebox son \n\nApp store son 5 yoruma ulasmak icin servis ismi bosluk yorum yaz gonder.\nOrnek: bip yorum\n\nTüm servislerin puanini gorebilmek için hepsi yaz gonder. Sıralı almak için hepsi ios yada hepsi android yaz gonder.\nÖrnek: hepsi ios \n\nSorgulayabilecegin servisleri ogrenmek icin liste yaz gonder.\nOrnek: liste\n\nhttp://appony.ga";
 		$postResult=sendBipResponse($receiver,$content);
 		echo "\nyardim content is: ".$content;
 
@@ -250,7 +241,7 @@ else {
 
 
 		} elseif ($keyword=="liste") {
-		$content="Sorgulayabilecegin servisler:\nfizy\nlifebox\nbip\nhesabim\ndergilik\nRBT\nupcall\nplatinum\ntty\ngnc\nakademi\nyanimda\nspotify\nwhatsapp\ndmags\nresmiislerim";
+		$content="Sorgulayabilecegin servisler:\nfizy\nlifebox\nbip\nhesabim\ndergilik\nRBT\nTurkcellTv\nupcall\nplatinum\ntty\ngnc\nakademi\nyanimda\nspotify\nwhatsapp\ndmags\nresmiislerim";
 		$postResult=sendBipResponse($receiver,$content);
 		echo "\nliste content is: ".$content;
 

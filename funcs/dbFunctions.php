@@ -1413,14 +1413,17 @@ $fizyJson=json_decode($fizyGet);
 //echo $$fizyGet;
 
 echo "<h2><center> Güncel App Store Yorumları </center></h2>";
-for ($x = 1; $x <= 15; $x++) {
+for ($x = 1; $x <= 49; $x++) {
 
 $id=$fizyJson->feed->entry[$x]->id->label;
 $author=$fizyJson->feed->entry[$x]->author->name->label;
 $comment=$fizyJson->feed->entry[$x]->content->label;
 $title=$fizyJson->feed->entry[$x]->title->label;
 $ratingPlaceholder='im:rating';
+$versionPlaceholder='im:version';
 $rating=$fizyJson->feed->entry[$x]->$ratingPlaceholder->label;
+$version=$fizyJson->feed->entry[$x]->$versionPlaceholder->label;
+
 //$rating='soon...';
 
 echo "			<!-- Banner -->\n"; 
@@ -1431,6 +1434,7 @@ echo "							<div class=\"12u 12u(medium)\">\n";
 echo "								<h4>".$author." </br>".$title."</h4>\n"; 
 echo "								<p1>".$comment."</p1>\n"; 
 echo "								</br><p1><b>verdiği puan: ".$rating."</p1></b>\n";
+echo "								</br><p1><b>versiyon: ".$version."</p1></b>\n";
 echo "							</div>\n";
 echo "						</div>\n"; 
 echo "					</div>\n"; 
