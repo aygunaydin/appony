@@ -1,4 +1,4 @@
 #!/bin/bash
 
-wget http://turkcell.ga/createDailyRecords.php
-wget http://turkcell.ga/recordReviews.php
+wget http://appony.ga/createDailyRecords.php
+wget http://appony.ga/recordReviews.php
