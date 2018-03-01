@@ -331,12 +331,12 @@ file_put_contents($file, $log, FILE_APPEND | LOCK_EX);
 //$postdata=json_encode($contentArray);
 //$postData=json_encode($bipRespArray);
 $bipTesURL="http://tims.turkcell.com.tr/tes/rest/spi/sendmsgserv";
-$username="bu2705614779894449";
-$password="bu270562f6d5476";
+$username="user";
+$password="pass";
   
 // $curl = curl_init(); 
 // curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC ) ; 
-// curl_setopt($curl, CURLOPT_USERPWD, "bu2705614779894449:bu270562f6d5476"); 
+// curl_setopt($curl, CURLOPT_USERPWD, "user:pass"); 
 // curl_setopt($curl, CURLOPT_POST, true); 
 // curl_setopt($curl, CURLOPT_POSTFIELDS, $postdataJson); 
 // curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); 
@@ -367,70 +367,6 @@ return $result;
 
 
 
-function sendBipImage($receiver,$content,$imageURL){
-
-//$postdataRaw ='{"txnid":"200","receiver":{"type":2, "address":"'.$receiver.'"}, "composition": {"list": [{"type":0,"message":"'.$content.'"}]}}';
-
-$postdata['txnid']=rand(200,10000);
-$receiverArray['type']=2;
-$receiverArray['address']=$receiver;
-$postdata['receiver']=$receiverArray;
-$listArray0['type']=0;
-$listArray0['message']=$content;
-$listArray[0]=$listArray0;
-$listArray1['type']=2;
-$listArray1['message']=$imageURL;
-$listArray1['size']=133844;
-$listArray1['ratio']=0.6;
-$listArray[1]=$listArray1;
-$composition0['list']=$listArray;
-$postdata['composition']=$composition0;
-//echo "\npostdata array: ".$postdata;
-//$postdataJson = "json=".json_encode($postdata)."&";
-$postdataJson = json_encode($postdata);
-echo "\npostdata json: ".$postdataJson;
-
-// $contentArray=array(
-//    'txnid' => '200',
-//    'receiver' => array( 'type' => 2,'address' => $receiver),
-//    'composition' => array('list' => 0 array (0 => array(
-//          				'type' => 0, 'message' => $content ))));
-//$postdata=json_encode($contentArray);
-//$postData=json_encode($bipRespArray);
-$bipTesURL="http://tims.turkcell.com.tr/tes/rest/spi/sendmsgserv";
-$username="bu2705614779894449";
-$password="bu270562f6d5476";
-  
-// $curl = curl_init(); 
-// curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC ) ; 
-// curl_setopt($curl, CURLOPT_USERPWD, "bu2705614779894449:bu270562f6d5476"); 
-// curl_setopt($curl, CURLOPT_POST, true); 
-// curl_setopt($curl, CURLOPT_POSTFIELDS, $postdataJson); 
-// curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); 
-// curl_setopt($curl, CURLOPT_URL, $bipTesURL); 
-// //curl_setopt($curl, CURLOPT_HTTPHEADER,  array("Content-Type : application/json","Accept: application/json")); 
-// $result=curl_exec($curl);
-// curl_close($curl); 
-
-$ch = curl_init($bipTesURL);
-//curl_setopt($ch, CURLOPT_POST, true);
-//curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-//curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST"); 
-curl_setopt($ch, CURLOPT_HEADER, true);
-curl_setopt($ch, CURLOPT_HTTPHEADER,  Array("Content-Type: application/json")); 
-curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC ) ; 
-curl_setopt($ch, CURLOPT_USERPWD, "bu2705614779894449:bu270562f6d5476"); 
-curl_setopt($ch, CURLOPT_POSTFIELDS, $postdataJson);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
-curl_setopt($ch, CURLOPT_POST, true);
-$result = curl_exec($ch);
-
-//print_r($result); 
-//echo "statuscode: ".$status_code;
-//echo $result;
-return $result;
-
-}
 
 
 
